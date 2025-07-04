@@ -1,61 +1,133 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel E-Commerce Products API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A simple CRUD API for managing products in an e-commerce system.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Product management (CRUD operations)
+- No authentication middleware (for testing purposes)
+- JSON responses
+- MySQL database storage
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## API Endpoints
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Base URL
+`http://localhost:8000/api`
 
-## Learning Laravel
+## Products CRUD Operations
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### 1. Get All Products
+```bash
+curl -X GET http://localhost:8000/api/products \
+-H "Accept: application/json"
+2. Create a Product
+bash
+curl -X POST http://localhost:8000/api/products \
+-H "Accept: application/json" \
+-H "Content-Type: application/json" \
+-d '{
+"name": "Premium Headphones",
+"description": "Noise-cancelling wireless headphones",
+"price": 299.99,
+"stock_quantity": 50,
+"sku": "HP-001",
+"category": "Electronics"
+}'
+3. Get Single Product
+bash
+curl -X GET http://localhost:8000/api/products/1 \
+-H "Accept: application/json"
+4. Update a Product
+bash
+curl -X PUT http://localhost:8000/api/products/1 \
+-H "Accept: application/json" \
+-H "Content-Type: application/json" \
+-d '{
+"name": "Updated Headphones",
+"price": 249.99
+}'
+5. Delete a Product
+bash
+curl -X DELETE http://localhost:8000/api/products/1 \
+-H "Accept: application/json"
+Additional Product Routes
+Get Products by Category
+bash
+curl -X GET http://localhost:8000/api/products/category/Electronics \
+-H "Accept: application/json"
+Get Active Products
+bash
+curl -X GET http://localhost:8000/api/products/active \
+-H "Accept: application/json"
+Database Schema
+Products Table
+Field Type Description
+id bigint Primary key
+name varchar(255) Product name
+description text Product description
+price decimal(10,2) Product price
+stock_quantity int Available quantity
+sku varchar(255) Unique product identifier
+image_url varchar(255) Product image URL (nullable)
+is_active boolean Product status (default: true)
+weight decimal(8,2) Product weight (nullable)
+dimensions json {length, width, height}
+category varchar(255) Product category
+tags json Array of tags
+created_at timestamp Creation timestamp
+updated_at timestamp Last update timestamp
+deleted_at timestamp Soft delete timestamp
+Installation
+Clone the repository:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+bash
+git clone https://github.com/yourusername/ecommerce-products-api.git
+cd ecommerce-products-api
+Install dependencies:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+bash
+composer install
+Create and configure .env file:
 
-## Laravel Sponsors
+bash
+cp .env.example .env
+Generate application key:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+bash
+php artisan key:generate
+Run migrations:
 
-### Premium Partners
+bash
+php artisan migrate
+Seed database with sample products:
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+bash
+php artisan db:seed
+Start development server:
 
-## Contributing
+bash
+php artisan serve
+Testing
+You can test the API using:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+cURL (examples provided above)
 
-## Code of Conduct
+Postman
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Any HTTP client
 
-## Security Vulnerabilities
+Notes
+This is a testing version without authentication middleware. For production use, please implement proper authentication.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+License
+This project is open-source under the MIT license.
 
-## License
+text
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This README includes:
+1. Clear API endpoint documentation
+2. Proper cURL examples for all CRUD operations
+3. Database schema information
+4. Installation instructions
+5. Testing guidance
+6. License information
